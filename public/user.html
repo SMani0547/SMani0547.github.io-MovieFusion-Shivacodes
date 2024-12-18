@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        /* Navbar Styles */
+        nav {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            background-color: transparent;
+        }
+
+        nav ul li a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+
+        /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; /* Makes the image circular */
+            margin-right: 10px; /* Spacing between the image and username */
+        }
+
+        .user-info span {
+            font-size: 16px;
+            color: white;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%; /* Position dropdown below the parent */
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Show dropdown when clicked */
+        .dropdown.show .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/user.html">Home</a></li>
+            <li class="dropdown" id="userDropdown">
+                <div class="user-info" id="usernameBtn">
+                    <img src="./default.png" alt="User Avatar" id="userAvatar" style="display: none;">
+                    <span>Login</span>
+                </div>
+                <div class="dropdown-content" id="dropdownMenu">
+                    <a href="#" id="userDetails">Username</a>
+                    <a href="#" id="userEmail">Email</a>
+                    <a href="/settings" id="settingsBtn">Settings</a>
+                    <a href="#" id="logoutBtn">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div>
+        <h1>Welcome to the User Dashboard!</h1>
+    </div>
+
+    <script>
+        // Function to check login status and update UI
+        function checkLoginStatus() {
+            const username = localStorage.getItem('username');
+            const email = localStorage.getItem('email');
+
+            if (username && email) {
+                // User is logged in
+                document.getElementById('usernameBtn').innerHTML = `<img src="./default.png" alt="User Avatar" id="userAvatar" style="display: inline;"> ${username}`; // Update button with username
+                document.getElementById('userDetails').textContent = username; // Show username in dropdown
+                document.getElementById('userEmail').textContent = email; // Show email in dropdown
+                document.getElementById('userAvatar').style.display = 'inline'; // Show avatar
+            } else {
+                // User is not logged in
+                document.getElementById('usernameBtn').innerHTML = `<span>Login</span>`; // Show login text
+                document.getElementById('userAvatar').style.display = 'none'; // Hide avatar
+            }
+        }
+
+        // Toggle dropdown visibility when clicking the username button
+        document.getElementById('userDropdown').addEventListener('click', function(event) {
+            event.stopPropagation();
+            this.classList.toggle('show');
+        });
+
+        // Handle logout click
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            // Clear username and email from localStorage and reset UI
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            checkLoginStatus(); // Recheck login status
+        });
+
+        // Close the dropdown if clicked outside
+        window.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('userDropdown');
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Call checkLoginStatus on page load
+        checkLoginStatus();
+
+        // Handle login click (Redirect to login page if not logged in)
+        document.getElementById('usernameBtn').addEventListener('click', function() {
+            if (!localStorage.getItem('username')) {
+                // Redirect to login page if not logged in
+                window.location.href = "login.html";
+            }
+        });
+    </script>
+</body>
+</html>

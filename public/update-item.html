@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Item</title>
+    <style>
+        /* Copy the styles from your existing page here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Item</h1>
+        <div class="update-form">
+            <h2>Update Item</h2>
+            <form id="updateForm">
+                <input type="hidden" id="updateId" name="id">
+                <input type="text" id="updateName" name="name" placeholder="Enter name" required>
+                <textarea id="updateDescription" name="description" placeholder="Enter description" required></textarea>
+                <input type="text" id="updateLink" name="link" placeholder="Enter IMDb/TMDb link" required>
+                <input type="text" id="updatePoster" name="poster" placeholder="Enter poster URL">
+                <select id="updateCategory" name="category" required>
+                    <option value="movie">Movie</option>
+                    <option value="series">Series</option>
+                    <option value="cartoon">Cartoon</option>
+                    <option value="anime">Anime</option>
+                </select>
+                <select id="updateAudienceAge" name="audience_age" required>
+                    <option value="G">G</option>
+                    <option value="PG">PG</option>
+                    <option value="PG-13">PG-13</option>
+                    <option value="R">R</option>
+                    <option value="NC-17">NC-17</option>
+                </select>
+                <input type="number" id="updateLength" name="length" placeholder="Enter length (minutes)" required>
+                <button type="submit">Update Item</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const updateForm = document.getElementById('updateForm');
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+
+            if (!itemId) {
+                alert("No item ID provided.");
+                return;
+            }
+
+            // Fetch item details
+            fetch(`/get-item/${itemId}`)
+                .then(response => response.json())
+                .then(item => {
+                    document.getElementById('updateId').value = item.id;
+                    document.getElementById('updateName').value = item.name;
+                    document.getElementById('updateDescription').value = item.description;
+                    document.getElementById('updateLink').value = item.link;
+                    document.getElementById('updatePoster').value = item.poster;
+                    document.getElementById('updateCategory').value = item.category;
+                    document.getElementById('updateAudienceAge').value = item.audience_age;
+                    document.getElementById('updateLength').value = item.length;
+                })
+                .catch(err => console.error('Error fetching item for update:', err));
+
+            updateForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const updatedItem = {
+                    id: document.getElementById('updateId').value,
+                    name: document.getElementById('updateName').value,
+                    description: document.getElementById('updateDescription').value,
+                    link: document.getElementById('updateLink').value,
+                    poster: document.getElementById('updatePoster').value,
+                    category: document.getElementById('updateCategory').value,
+                    audience_age: document.getElementById('updateAudienceAge').value,
+                    length: document.getElementById('updateLength').value
+                };
+
+                fetch('/update-item', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedItem)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Item updated successfully');
+                        window.location.href = '/'; // Redirect to the main page
+                    } else {
+                        alert('Failed to update item');
+                    }
+                })
+                .catch(err => console.error('Error updating item:', err));
+            });
+        });
+    </script>
+</body>
+</html>

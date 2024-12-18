@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+  <style>
+           /* Global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        main {
+            flex: 1;
+          padding-left: 200px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body {
+             font-family: Arial, sans-serif;
+              background-color: #141414;
+              color: #fff;
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+        }
+
+        .form-container {
+            background-color: #1c1c1c; /* Dark grey card background */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .form-container h1 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input, textarea, select {
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #aaa;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff; /* Blue theme for the button */
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.02); /* Slight zoom effect */
+        }
+
+        button:active {
+            background-color: #00408d; /* Even darker blue on click */
+        }
+
+        select:focus, input:focus, textarea:focus {
+            border: 2px solid #007bff; /* Blue border on focus */
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+
+            .form-container h1 {
+                font-size: 1.4rem;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 10px;
+            }
+
+            .form-container h1 {
+                font-size: 1.2rem;
+            }
+
+            input, textarea, select, button {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+        }
+  </style>
+</head>
+<body>
+
+ <div id="header"></div>
+<main>
+          <div class="form-container">
+            <h1>Add Item to Database</h1>
+            <form id="itemForm">
+                <!-- Form contents remain the same -->
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter movie or series name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" placeholder="Enter a brief description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="link">Movie ID (IMDb or TMDb):</label>
+                    <input type="text" id="link" name="link" placeholder="e.g., tt2631186" required>
+                </div>
+                <div class="form-group">
+                    <label for="poster">Poster Image URL:</label>
+                    <input type="text" id="poster" name="poster" placeholder="e.g., https://example.com/poster.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="movie">Movie</option>
+                        <option value="series">Series</option>
+                        <option value="cartoon">Cartoon</option>
+                        <option value="anime">Anime</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="audience_age">Audience Age:</label>
+                    <select id="audience_age" name="audience_age" required>
+                        <option value="G">G</option>
+                        <option value="PG">PG</option>
+                        <option value="PG-13">PG-13</option>
+                        <option value="R">R</option>
+                        <option value="NC-17">NC-17</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="ratingInteger" name="ratingInteger" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <select id="ratingDecimal" name="ratingDecimal" required>
+                            <option value="0">.0</option>
+                            <option value="1">.1</option>
+                            <option value="2">.2</option>
+                            <option value="3">.3</option>
+                            <option value="4">.4</option>
+                            <option value="5">.5</option>
+                            <option value="6">.6</option>
+                            <option value="7">.7</option>
+                            <option value="8">.8</option>
+                            <option value="9">.9</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="length">Length (in minutes):</label>
+                    <input type="number" id="length" name="length" placeholder="Enter duration in minutes" required>
+                </div>
+                <button type="submit">Add Item</button>
+            </form>
+        </div>
+</main>
+
+    <script>
+
+          // Load header
+    fetch('/admin-header.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('header').innerHTML = data);
+
+
+        document.getElementById('itemForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const description = document.getElementById('description').value;
+            let link = document.getElementById('link').value;
+            const poster = document.getElementById('poster').value;
+            const category = document.getElementById('category').value;
+            const audience_age = document.getElementById('audience_age').value;
+            const ratingInteger = document.getElementById('ratingInteger').value;
+            const ratingDecimal = document.getElementById('ratingDecimal').value;
+            const rating = ratingInteger + '.' + ratingDecimal;  // Combine integer and decimal rating
+            const length = document.getElementById('length').value;
+
+            // Extract just the ID (remove any URL part if entered as full link)
+            const idPattern = /tt\d+/; // Regular expression to match 'tt' followed by numbers
+            const match = link.match(idPattern);
+            if (match) {
+                link = match[0];  // Store only the movie ID, e.g., 'tt2631186'
+            } else {
+                alert('Invalid movie ID. Please enter a valid IMDb or TMDb ID.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/add-item', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        description,
+                        link,
+                        poster,
+                        category,
+                        audience_age,
+                        rating,  // Send the combined rating (e.g., 7.5)
+                        length,
+                    }),
+                });
+
+                if (response.ok) {
+                    const message = await response.text();
+                    alert(message);
+                } else {
+                    alert('Failed to add item. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please check the console for details.');
+            }
+        });
+    </script>
+</body>
+</html>

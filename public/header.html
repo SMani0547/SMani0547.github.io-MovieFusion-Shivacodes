@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="x-icon" href="./movie logo.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    ShivaCodes
+  </title>
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- OWL CAROUSEL -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="/grid.css">
+
+  <!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel/dist/assets/owl.theme.default.min.css">
+<style>
+
+ /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; /* Makes the image circular */
+            margin-right: 10px; /* Spacing between the image and username */
+        }
+
+        .user-info span {
+            font-size: 16px;
+            color: white;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%; /* Position dropdown below the parent */
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+</style>
+  <title>header</title>
+</head>
+<body>
+  <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="#" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>MovieFusion  <span class="main-color" style="font-size: 15px">ShivaCodes</span>
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="#">Genre</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">Series</a></li>
+                    <li><a href="#">About</a></li>
+                   <li><a href="/add.html">add</a></li>
+                    <li><a href="/display.html">display</a></li>
+                    <li><a href="/video%20player.html">video player</a></li>
+                      <li class="dropdown">
+                <div class="user-info">
+                    <img src="./luffy-profile.jpg" alt="User Avatar" id="userAvatar">
+                    <span id="usernameBtn">Username</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="#" id="logoutBtn">Logout</a>
+                </div>
+            </li>
+                </ul>
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="/app.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Owl Carousel JS -->
+<script src="https://cdn.jsdelivr.net/npm/owl.carousel/dist/owl.carousel.min.js"></script>
+<script>
+
+   // Function to check login status and update UI
+        function checkLoginStatus() {
+            const username = localStorage.getItem('username');
+
+            if (username) {
+                // User is logged in
+                document.getElementById('usernameBtn').textContent = username; // Update button with username
+                document.getElementById('logoutBtn').style.display = 'block'; // Show dropdown logout button
+                document.getElementById('userAvatar').style.display = 'inline'; // Show avatar
+            } else {
+                // User is not logged in
+                document.getElementById('usernameBtn').textContent = 'Login'; // Show login text
+                document.getElementById('logoutBtn').style.display = 'none'; // Hide dropdown logout button
+                document.getElementById('userAvatar').style.display = 'none'; // Hide avatar
+            }
+        }
+
+        // Call checkLoginStatus on page load
+        checkLoginStatus();
+
+        // Handle login click
+        document.getElementById('usernameBtn').addEventListener('click', function() {
+            if (!localStorage.getItem('username')) {
+                // Redirect to login page if not logged in
+                window.location.href = "login.html";
+            }
+        });
+
+        // Handle logout click (Dropdown Logout)
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            // Clear username from localStorage and reset UI
+            localStorage.removeItem('username');
+            checkLoginStatus();
+        });
+</script>
+</body>
+</html>

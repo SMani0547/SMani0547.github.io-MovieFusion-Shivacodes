@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Base styles for body and container */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #1a1a1a; /* Dark background for the content area */
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #2b2b2b; /* Dark gray for the sidebar */
+            color: #d3d3d3; /* Light gray for text */
+            display: block;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        /* General styles for the sidebar */
+.nav-link {
+
+ display: block;
+    text-decoration: none; /* Remove underline */
+    color: #d3d3d3; /* Sidebar text color */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+.dropdown-menu li a {
+    display: block; /* Make each dropdown item clickable */
+
+    text-decoration: none; /* Remove underline */
+
+}
+        /* Sidebar menu styles */
+        .sidebar .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Sidebar menu item styles */
+        .sidebar .menu li {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #3a3a3a;
+            color: #d3d3d3;
+        }
+
+        /* Hover effect for menu items */
+        .sidebar .menu li:hover {
+            background-color: #444;
+            color: white;
+        }
+
+        /* Dropdown menu styles */
+        .sidebar .menu li .dropdown-menu {
+            list-style: none;
+            margin: 10px 0;
+            padding: 0;
+          align-content: center;
+            display: none; /* Hidden by default */
+            background-color: #3a3a3a;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+        }
+
+        .sidebar .menu li .dropdown-menu li {
+            padding: 10px 0;
+            border-bottom: none;
+        }
+
+        .sidebar .menu li .dropdown-menu li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .sidebar .menu li .dropdown-menu li a:hover {
+            color: #ffffff;
+        }
+
+        /* Admin section styles */
+        .sidebar .admin-dropdown {
+            margin-top: auto;
+            padding: 15px 20px;
+            cursor: pointer;
+            background-color: #2b2b2b;
+            position: relative;
+            color: #d3d3d3;
+        }
+
+        .sidebar .admin-dropdown .admin-name {
+            color: #8ab4f8;
+            font-weight: bold;
+        }
+
+
+        /* Content area styles */
+        .content {
+            margin-left: 250px;
+            padding: 45px;
+            flex: 1;
+            overflow: auto;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        /* Menu toggle button (hidden by default) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            background-color: #2b2b2b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #hamburger-icon {
+            font-size: 24px;
+        }
+
+        #close-icon {
+            font-size: 24px;
+        }
+
+        /* Mobile and tablet screen styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%); /* Sidebar hidden by default */
+            }
+
+            .sidebar.show {
+                transform: translateX(0); /* Sidebar visible when toggled */
+            }
+
+            .content {
+                margin-left: 0; /* Shift content when sidebar is visible */
+            }
+
+            /* Show the menu toggle button on mobile */
+            .menu-toggle {
+                display: block; /* Show the menu toggle button on small screens */
+            }
+
+            .sidebar{
+              padding-top: 60px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <button class="menu-toggle" id="menuToggle">
+        <span id="hamburger-icon">☰</span>
+        <span id="close-icon" style="display: none;">×</span>
+    </button>
+    <div class="sidebar" id="sidebar">
+     <ul class="menu">
+    <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
+    <li><a href="/users" class="nav-link">Users</a></li>
+ <li><a href="/reports" class="nav-link">Reports</a></li>
+    <!-- Add Section -->
+    <li>
+        <a href="#" class="nav-link dropdown-toggle">Add ▼</a>
+        <ul class="dropdown-menu" id="addDropdown">
+            <li><a href="/add.html">Add Movie</a></li>
+            <li><a href="/series/add">Add Series</a></li>
+        </ul>
+    </li>
+
+    <!-- Update Section -->
+    <li>
+        <a href="#" class="nav-link dropdown-toggle">Update ▼</a>
+        <ul class="dropdown-menu" id="updateDropdown">
+            <li><a href="/movies/update">Update Movie</a></li>
+            <li><a href="/series/update">Update Series</a></li>
+        </ul>
+    </li>
+
+    <!-- Delete Section -->
+    <li>
+        <a href="#" class="nav-link dropdown-toggle">Delete ▼</a>
+        <ul class="dropdown-menu" id="deleteDropdown">
+            <li><a href="/movies/delete">Delete Movie</a></li>
+            <li><a href="/series/delete">Delete Series</a></li>
+        </ul>
+    </li>
+
+
+    <li>
+        <a href="#" class="nav-link dropdown-toggle" id="adminName">Admin ▼</a>
+        <ul class="dropdown-menu" id="adminDropdown">
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/logout" id="logout">Logout</a></li>
+        </ul>
+    </li>
+</ul>
+
+    </div>
+
+
+    <script>
+        let lastClickedDropdown = null;  // Track the last clicked dropdown
+
+        // Handle dropdown menu for admin name on click
+        document.getElementById("adminName").addEventListener("click", function (event) {
+            const dropdownMenu = document.getElementById("adminDropdown");
+            if (lastClickedDropdown && lastClickedDropdown !== dropdownMenu) {
+                // Close the previously opened dropdown with animation
+                closeDropdown(lastClickedDropdown);
+            }
+            toggleDropdown(dropdownMenu);
+            lastClickedDropdown = dropdownMenu;
+            event.stopPropagation(); // Prevent the event from propagating to the document
+        });
+
+        // Handle dropdown for Add, Update, Delete on click
+        document.querySelectorAll('.menu li').forEach(function (li) {
+            li.addEventListener("click", function (event) {
+                const dropdownMenu = li.querySelector(".dropdown-menu");
+                if (dropdownMenu) {
+                    if (lastClickedDropdown && lastClickedDropdown !== dropdownMenu) {
+                        // Close the previously opened dropdown with animation
+                        closeDropdown(lastClickedDropdown);
+                    }
+                    toggleDropdown(dropdownMenu);
+                    lastClickedDropdown = dropdownMenu;
+                    event.stopPropagation(); // Prevent the event from bubbling up to the document
+                } else {
+                    // If clicked on non-dropdown menu items like "Dashboard" or "Reports", close the dropdowns
+                    if (lastClickedDropdown) {
+                        closeDropdown(lastClickedDropdown);
+                        lastClickedDropdown = null;
+                    }
+                }
+            });
+        });
+
+        // Toggle dropdown visibility with animation
+        function toggleDropdown(dropdownMenu) {
+            if (dropdownMenu.style.display === "block") {
+                dropdownMenu.style.opacity = "0";
+                dropdownMenu.style.maxHeight = "0";
+                setTimeout(() => {
+                    dropdownMenu.style.display = "none";
+                }, 300);  // Wait for the animation to complete
+            } else {
+                dropdownMenu.style.display = "block";
+                setTimeout(() => {
+                    dropdownMenu.style.opacity = "1";
+                    dropdownMenu.style.maxHeight = "500px"; // Adjust this value as necessary
+                }, 0);  // Start animation immediately after the dropdown becomes visible
+            }
+        }
+
+        // Close a dropdown with animation
+        function closeDropdown(dropdownMenu) {
+            dropdownMenu.style.opacity = "0";
+            dropdownMenu.style.maxHeight = "0";
+            setTimeout(() => {
+                dropdownMenu.style.display = "none";
+            }, 300); // Wait for the closing animation to complete
+        }
+
+        // Close all dropdowns if clicked outside
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest('.sidebar')) {
+                if (lastClickedDropdown) {
+                    closeDropdown(lastClickedDropdown);
+                    lastClickedDropdown = null;
+                }
+            }
+        });
+
+        // Prevent closing the dropdown when clicked inside the menu
+        document.querySelectorAll('.menu li').forEach(function (li) {
+            li.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
+        });
+
+        // Get references to the toggle button, sidebar, and icons
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        // Toggle sidebar visibility and switch icons on button click
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+            // Toggle the visibility of the icons
+            hamburgerIcon.style.display = sidebar.classList.contains('show') ? 'none' : 'block';
+            closeIcon.style.display = sidebar.classList.contains('show') ? 'block' : 'none';
+        });
+
+        // Close sidebar when clicking outside (only on mobile view)
+document.addEventListener('click', (event) => {
+    const isMobileView = window.innerWidth <= 768; // Check if it's mobile view
+    if (isMobileView && sidebar.classList.contains('show')) {
+        if (!event.target.closest('.sidebar') && !event.target.closest('.menu-toggle')) {
+            sidebar.classList.remove('show');
+            hamburgerIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
+        }
+    }
+});
+
+        // Handle logout functionality
+        document.getElementById("logout").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor tag behavior
+            localStorage.removeItem("username");  // Clear username from localStorage
+
+            fetch("/logout", {
+                method: "POST"  // Send POST request to logout endpoint
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/login";  // Redirect to login page if logout is successful
+                }
+            })
+            .catch(err => {
+                console.error("Logout failed:", err);
+                window.location.href = "/login";  // Redirect anyway in case of an error
+            });
+        });
+
+    </script>
+</body>
+</html>

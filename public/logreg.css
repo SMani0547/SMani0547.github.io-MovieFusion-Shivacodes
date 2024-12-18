@@ -1,0 +1,351 @@
+/* Font import and global reset */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* Body styling */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000;
+}
+
+/* Section styles */
+section {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+/* Animated gradient effect */
+section::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#000, #1f83ed, #000);
+  animation: animate 5s linear infinite;
+}
+
+/* Animation keyframes */
+@keyframes animate {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Styling for individual spans */
+section span {
+  position: relative;
+  display: block;
+  width: calc(6.25vw - 2px);
+  height: calc(6.25vw - 2px);
+  background: #221f1f;
+  z-index: 2;
+  transition: 1.5s;
+}
+
+section span:hover {
+  background: #1f83ed;
+  transition: 0s;
+}
+
+/* Sign-in form styles */
+.signin {
+  position: absolute;
+  width: 90%;
+  max-width: 400px;
+  background: #222;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+}
+
+.signin .content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signin .content h2 {
+  font-size: 1.8em;
+  color: #1f83ed;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.signin .content .form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signin .content .form .inputBox {
+  position: relative;
+  width: 100%;
+}
+
+.signin .content .form .inputBox input {
+  position: relative;
+  width: 100%;
+  background: #333;
+  border: none;
+  outline: none;
+  padding: 15px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.signin .content .form .inputBox i {
+  position: absolute;
+  left: 0;
+  padding: 15px 10px;
+  font-style: normal;
+  color: #aaa;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.signin .content .form .inputBox input:focus ~ i,
+.signin .content .form .inputBox input:valid ~ i {
+  transform: translateY(-7.5px);
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.signin .content .form .links {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin .content .form .links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.signin .content .form .links a:nth-child(2) {
+  color: #1f83ed;
+  font-weight: 600;
+}
+
+.signin .content .form .inputBox input[type="submit"] {
+  padding: 10px;
+  background: #1f83ed;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+input[type="submit"]:active {
+  opacity: 0.6;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 900px) {
+  section span {
+    width: calc(8vw - 2px);
+    height: calc(8vw - 2px);
+  }
+
+  .signin {
+    width: 85%;
+    max-width: 350px;
+    padding: 15px;
+  }
+
+  .signin .content h2 {
+    font-size: 1.5em;
+  }
+
+  .signin .content .form .inputBox input {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 600px) {
+  section span {
+    width: calc(15vw - 2px);
+    height: calc(15vw - 2px);
+  }
+
+
+
+  .signin .content h2 {
+    font-size: 1.3em;
+  }
+
+  .signin .content .form .inputBox input {
+    font-size: 0.85em;
+    padding: 12px 8px;
+  }
+
+  .signin .content .form .inputBox input[type="submit"] {
+    font-size: 1em;
+  }
+}
+
+/* Notification Styles */
+.notification {
+    position: absolute;
+    top: -50px; /* Adjusted to be above the form */
+    left: 0; /* Align to the left edge of the form */
+    width: 100%; /* Take full width of the form */
+    padding: 10px 20px;
+    background-color: #3bea20; /* Green background for success */
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+    text-align: center; /* Center the text */
+    display: none;
+}
+
+/* For error notifications */
+.notification.error {
+    background-color: #fd0000; /* Red background for error */
+}
+
+/* For success notifications */
+.notification.success {
+    background-color: #3bea20; /* Green background for success */
+}
+
+/* Mobile specific adjustment */
+@media (max-width: 600px) {
+    .notification {
+        top: -30px; /* Adjust top for mobile to avoid overlap */
+    }
+}
+
+.signin .content .form .inputBox {
+  position: relative;
+  width: 100%;
+}
+
+/* Styling for the input field */
+.signin .content .form .inputBox input {
+  width: 100%;
+  background: #333;
+  border: 2px solid #221f1f; /* Add border to the input */
+  outline: none;
+  padding: 15px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+/* Label inside the border of the input field */
+.signin .content .form .inputBox label {
+  position: absolute;
+  top: -10px; /* Position the label above the border */
+  left: 10px;
+  background-color: #222; /* Match the background color of the input */
+  padding: 0 5px;
+  font-size: 0.9em;
+  color: #aaa;
+  transition: all 0.3s ease;
+}
+
+/* When the input is focused or contains text, the label moves above */
+.signin .content .form .inputBox input:focus + label,
+.signin .content .form .inputBox input:not(:placeholder-shown) + label {
+  top: -10px;
+  font-size: 0.85em;
+  color: #ffffff; /* Highlight label color */
+}
+
+/* Media Queries: Adjustments for smaller screens */
+@media (max-width: 900px) {
+  .signin .content .form .inputBox input {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 600px) {
+  .signin .content .form .inputBox input {
+    font-size: 0.85em;
+    padding: 12px 8px;
+  }
+}
+/* Style for the input box container */
+.inputBox {
+  margin: 10px 0;
+}
+
+/* Container for input field and button */
+.password-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Input field */
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* Space for the button */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  outline: none;
+}
+
+/* Toggle button */
+.password-container .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  color: #333;
+}
+.toggle-confirmpassword{
+   position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  color: #333;
+
+}

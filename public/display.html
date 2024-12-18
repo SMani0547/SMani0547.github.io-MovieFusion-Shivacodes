@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .card {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            width: 250px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card h3 {
+            font-size: 18px;
+            color: #333;
+        }
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+        .card button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .card button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Movies in Database</h1>
+
+    <div class="card-container" id="cardContainer"></div>
+
+    <script>
+        window.onload = async function() {
+            const response = await fetch('http://localhost:3000/get-items');
+            const items = await response.json();
+
+            const cardContainer = document.getElementById('cardContainer');
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                const title = document.createElement('h3');
+                title.textContent = item.name;
+                card.appendChild(title);
+
+                const description = document.createElement('p');
+                description.textContent = item.description;
+                card.appendChild(description);
+
+                // Create a button to open the movie in the custom video player
+                const button = document.createElement('button');
+                button.textContent = 'Watch Movie';
+                button.onclick = () => {
+                    // Redirect to the video player page with the movie's link as a query parameter
+                    window.location.href = `video player.html?videoUrl=${encodeURIComponent(item.link)}`;
+                };
+                card.appendChild(button);
+
+                cardContainer.appendChild(card);
+            });
+        };
+    </script>
+</body>
+</html>
