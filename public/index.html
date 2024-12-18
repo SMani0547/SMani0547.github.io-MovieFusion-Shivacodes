@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="./movie logo.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        ShivaCodes
+    </title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- OWL CAROUSEL -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="/grid.css">
+
+  <!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel/dist/assets/owl.theme.default.min.css">
+
+<style>
+/* Movie section */
+.movie-section {
+    padding: 2rem 0;
+}
+
+
+/* Carousel container */
+.movie-carousel {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent cards from wrapping */
+    justify-content: flex-start; /* Align cards to the left */
+    margin: 0; /* Remove any extra margin */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Ensure smooth snapping behavior */
+    position: relative; /* Ensure navigation buttons position correctly */
+}
+
+/* Movie item style */
+.movie-card {
+    width: 16.66%; /* Make the cards wider to match the design */
+    height: 320px; /* Set a fixed height for all cards */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+    margin-right: 1rem; /* Add some space between the cards */
+    border-radius: 10px; /* Keep rounded corners */
+    flex-shrink: 0; /* Prevent the card from shrinking */
+    scroll-snap-align: start; /* Ensure smooth scroll alignment */
+}
+
+/* Make the entire card clickable */
+.movie-card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent */
+}
+
+/* Hover effect for movie image */
+.movie-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the entire card */
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for image only (card won't pop up) */
+.movie-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Movie item content */
+.movie-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Align content at the bottom */
+    height: 100%;
+    border-radius: 10px; /* Rounded corners for the content */
+}
+
+/* Movie title */
+.movie-card-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Movie info */
+.movie-infos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+}
+
+.movie-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.movie-info span {
+    margin-left: 5px;
+}
+
+.movie-info i {
+    color: #ff9900; /* Color for icons */
+}
+
+/* Responsive layout for different screen sizes */
+
+/* For large screens (17-inch laptops, desktops) */
+@media (min-width: 1200px) {
+    .movie-card {
+        width: 16.66%; /* 6 items per row */
+        height: 320px; /* Set height */
+    }
+}
+
+/* For medium screens (laptops, tablets) */
+@media (max-width: 1200px) {
+    .movie-card {
+        width: 20%; /* 5 items per row */
+        height: 320px; /* Set height */
+    }
+}
+
+/* For small screens (smartphones in landscape) */
+@media (max-width: 768px) {
+    .movie-card {
+        width: 33.33%; /* 3 items per row */
+        height: 320px; /* Set height */
+    }
+}
+
+/* For very small screens (smartphones in portrait) */
+@media (max-width: 480px) {
+    .movie-card {
+        width: 100%; /* 1 item per row */
+        height: 320px; /* Set height */
+    }
+}
+
+ /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; /* Makes the image circular */
+            margin-right: 10px; /* Spacing between the image and username */
+        }
+
+        .user-info span {
+            font-size: 16px;
+            color: white;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%; /* Position dropdown below the parent */
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+</style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="/" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>MovieFusion  <span class="main-color" style="font-size: 15px">ShivaCodes</span>
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="#">Genre</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">Series</a></li>
+                    <li>
+                        <a href="#" class="btn btn-hover">
+                            <span>Sign in</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+
+<!-- All Movie SECTION -->
+<div class="movie-section">
+    <div class="container">
+        <div class="section-header">
+            All Movies
+        </div>
+        <div class="movie-carousel carousel-nav-center owl-carousel" id="movie">
+            <!-- MOVIE ITEM TEMPLATE -->
+            <div id="movie-template" class="movie-card" style="display: none;">
+                <a href="" class="movie-card-link">
+                    <img src="" alt="Movie Poster">
+                    <div class="movie-card-content">
+                        <div class="movie-card-title"></div>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span class="rating"></span>
+                            </div>
+                            <div class="movie-info">
+                                <i class="bx bxs-time"></i>
+                                <span class="length"></span>
+                            </div>
+                            <div class="movie-info">
+                                <span class="category"></span>
+                            </div>
+                            <div class="movie-info">
+                                <span class="audience-age"></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END All Movie SECTION -->
+
+<script>
+// Function to fetch movies from the server and populate the movie carousel
+async function fetchMovies() {
+    try {
+        const response = await fetch('/get-items');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const movies = await response.json();
+        console.log('Fetched movies:', movies);
+
+        const movieCarousel = document.getElementById('movie');
+        const template = document.getElementById('movie-template');
+
+        // Loop through the movie data and dynamically create movie cards
+        movies.forEach(movie => {
+            const movieItem = template.cloneNode(true);
+            movieItem.style.display = 'block'; // Make it visible
+
+            // Set the entire movie card to be clickable
+            const movieCardLink = movieItem.querySelector('.movie-card-link');
+            movieCardLink.href = `video player.html?videoUrl=${encodeURIComponent(movie.link)}`;
+
+            // Populate the fields dynamically
+            movieItem.querySelector('img').src = movie.poster || 'default-poster.jpg'; // Fallback for missing images
+            movieItem.querySelector('.movie-card-title').textContent = movie.name || 'Untitled';
+            movieItem.querySelector('.rating').textContent = movie.rating || 'N/A';
+            movieItem.querySelector('.length').textContent = `${movie.length || 'Unknown'} mins`;
+            movieItem.querySelector('.category').textContent = movie.category || 'Uncategorized';
+            movieItem.querySelector('.audience-age').textContent = movie.audience_age || 'N/A';
+
+            movieCarousel.appendChild(movieItem); // Add the movie item to the carousel
+        });
+
+/* // Initialize Owl Carousel after DOM is ready
+$(document).ready(function() {
+    if ($('.owl-carousel').length) { // Ensure the carousel element exists
+        $('.owl-carousel').owlCarousel({
+            items: 5,  // Set number of items per view
+            loop: true,
+            margin: 0,  // Set margin to 0 for no spacing between cards
+            nav: true,  // Show navigation arrows
+            dots: false,  // Disable dots
+            responsive: {
+                0: {
+                    items: 1,  // Show 1 item for very small screens
+                },
+                600: {
+                    items: 3,  // Show 3 items for smaller screens
+                },
+                1000: {
+                    items: 5,  // Show 5 items for larger screens
+                }
+            }
+        });
+    }
+});*/
+
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+    }
+}
+
+// Call fetchMovies when the page loads
+document.addEventListener('DOMContentLoaded', fetchMovies);
+
+   // Function to check login status and update UI
+        function checkLoginStatus() {
+            const username = localStorage.getItem('username');
+
+            if (username) {
+                // User is logged in
+                document.getElementById('usernameBtn').textContent = username; // Update button with username
+                document.getElementById('logoutBtn').style.display = 'block'; // Show dropdown logout button
+                document.getElementById('userAvatar').style.display = 'inline'; // Show avatar
+            } else {
+                // User is not logged in
+           document.getElementById('usernameBtn').textContent = 'Login';
+
+// Add necessary classes
+document.getElementById('usernameBtn').classList.add('btn');
+
+// Apply inline styles for the button
+document.getElementById('usernameBtn').style.padding = '10px 20px';
+document.getElementById('usernameBtn').style.backgroundColor = '#007bff'; // Button background color
+document.getElementById('usernameBtn').style.color = 'white'; // Text color
+
+// Add hover effect with JavaScript
+document.getElementById('usernameBtn').addEventListener('mouseover', function() {
+    this.style.color = 'blue'; // Change text color on hover
+});
+
+document.getElementById('usernameBtn').addEventListener('mouseout', function() {
+    this.style.color = 'white'; // Reset text color when mouse leaves
+});
+                document.getElementById('logoutBtn').style.display = 'none'; // Hide dropdown logout button
+                document.getElementById('userAvatar').style.display = 'none'; // Hide avatar
+            }
+        }
+
+        // Call checkLoginStatus on page load
+        checkLoginStatus();
+
+        // Handle login click
+        document.getElementById('usernameBtn').addEventListener('click', function() {
+            if (!localStorage.getItem('username')) {
+                // Redirect to login page if not logged in
+                window.location.href = "login.html";
+            }
+        });
+
+        // Handle logout click (Dropdown Logout)
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            // Clear username from localStorage and reset UI
+            localStorage.removeItem('username');
+            checkLoginStatus();
+        });
+</script>
+
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="#" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>MovieFusion<span class="main-color" style="font-size: 15px">ShivaCodes</span>
+                        </a>
+                        <p>
+                      "Welcome to MovieFusion, your ultimate destination for watching and downloading your favorite movies and series. Explore a vast collection of genres, from heart-pounding thrillers to feel-good rom-coms, all available in high quality. Create an account to enjoy personalized recommendations and exclusive features. Let the binge-watching begin!"
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>ShivaCodes</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="./google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="./app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        ShivaCodes@Copyright 2024
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="/app.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Owl Carousel JS -->
+<script src="https://cdn.jsdelivr.net/npm/owl.carousel/dist/owl.carousel.min.js"></script>
+
+
+</body>
+
+</html>
